@@ -59,10 +59,7 @@ const checkwinner = () => {
       tik[pat[2]] != ""
     )
       setTimeout(() => {
-        if (turn == "O") turn = "X";
-        else {
-          turn = "O";
-        }
+      
         alert(turn + " wins");
         har();
       }, 30);
