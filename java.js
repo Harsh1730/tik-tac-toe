@@ -79,7 +79,13 @@ const checkwinner = () => {
 
 function draw() {
   for (i = 0; i <= 8; i++) {
-    if (tik[i].innerHTML == "X" || tik[i].innerHTML == "O") {
+    if (tik[i].innerHTML == "X" || tik[i].innerHTML == "O" &&tik[pat[0]].innerHTML != tik[pat[1]].innerHTML ||
+      tik[pat[1]].innerHTML != tik[pat[2]].innerHTML ||
+      tik[pat[0]].innerHTML != tik[pat[2]].innerHTML ||
+      tik[pat[0]].innerHTML == "" ||
+      tik[pat[1]].innerHTML == "" ||
+      tik[pat[2]].innerHTML == ""
+) {
       c++;
     }
   }
