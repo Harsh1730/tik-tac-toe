@@ -1,4 +1,4 @@
-let turn = "s";
+let turn = "X";
 const win = [
   [0, 1, 2],
   [0, 3, 6],
@@ -9,92 +9,68 @@ const win = [
   [3, 4, 5],
   [6, 7, 8],
 ];
+
 function har() {
   let tik = document.querySelectorAll(".tik");
   tik.forEach((tik) => (tik.innerHTML = ""));
 }
-let reset = (document.querySelector(".reset").onclick = () => {
+
+document.querySelector(".reset").onclick = () => {
   har();
-  console.log("reset");
-});
-har();
-let arr = [];
+  console.log("Game reset");
+  turn = "X"; // Reset to default player
+};
+
 let tik = document.querySelectorAll(".tik");
-harry();
-let c = 0;
 
 function harry() {
-  turn = prompt("player 1 enter your symbol");
+  turn = prompt("Player 1, enter your symbol (X or O):");
   turn = turn.toUpperCase();
-  if (turn != "X" && turn != "O") {
-    alert("Invalid input");
+  if (turn !== "X" && turn !== "O") {
+    alert("Invalid input. Please enter X or O.");
     harry();
   }
 }
-console.log(turn);
+harry();
+console.log("Starting symbol:", turn);
 
 tik.forEach((tik) => {
   tik.onclick = () => {
-    if (tik.innerHTML == "" && turn == "X") {
+    if (tik.innerHTML === "") {
       tik.innerHTML = turn;
-      checkwinner();
-      turn = "O";
-    } else if (tik.innerHTML == "" && turn == "O") {
-      tik.innerHTML = turn;
-      checkwinner();
-      turn = "X";
+      if (checkWinner()) {
+        setTimeout(() => {
+          alert(`${turn} wins!`);
+          har();
+        }, 30);
+      } else if (isDraw()) {
+        setTimeout(() => {
+          alert("It's a draw!");
+          har();
+        }, 30);
+      } else {
+        turn = turn === "X" ? "O" : "X"; // Switch turn
+      }
     }
   };
 });
 
-
-const checkwinner = () => {
-  for (pat of win) {
+function checkWinner() {
+  for (let pat of win) {
     if (
-      tik[pat[0]].innerHTML == tik[pat[1]].innerHTML &&
-      tik[pat[1]].innerHTML == tik[pat[2]].innerHTML &&
-      tik[pat[0]].innerHTML == tik[pat[2]].innerHTML &&
-      tik[pat[0]].innerHTML != "" &&
-      tik[pat[1]] != "" &&
-      tik[pat[2]] != ""
-    )
-    {
-      setTimeout(() => {
-        if(turn=="X")
-          turn="O";
-        else
-          turn="X";
-      
-        alert(turn + " wins");
-        har();
-      }, 30);
+      tik[pat[0]].innerHTML === tik[pat[1]].innerHTML &&
+      tik[pat[1]].innerHTML === tik[pat[2]].innerHTML &&
+      tik[pat[0]].innerHTML !== ""
+    ) {
+      return true;
     }
-    else
-    {
-      draw();
-    }
-    
   }
-};
+  return false;
+}
 
-function draw() {
-  for (i = 0; i <= 8; i++) {
-    if (tik[i].innerHTML == "X" || tik[i].innerHTML == "O" &&tik[pat[0]].innerHTML != tik[pat[1]].innerHTML ||
-      tik[pat[1]].innerHTML != tik[pat[2]].innerHTML ||
-      tik[pat[0]].innerHTML != tik[pat[2]].innerHTML ||
-      tik[pat[0]].innerHTML == "" ||
-      tik[pat[1]].innerHTML == "" ||
-      tik[pat[2]].innerHTML == ""
-) {
-      c++;
-    }
+function isDraw() {
+  for (let cell of tik) {
+    if (cell.innerHTML === "") return false;
   }
-  if (c == 9) {
-    setTimeout(() => {
-      alert("draw");
-      har();
-    }, 30);
-  } else {
-    c = 0;
-  }
+  return true;
 }
