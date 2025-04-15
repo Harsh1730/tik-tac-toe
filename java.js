@@ -9,7 +9,7 @@ const win = [
   [3, 4, 5],
   [6, 7, 8],
 ];
-
+document.querySelector(".turn").innerHTML="Harsh";
 function har() {
   let tik = document.querySelectorAll(".tik");
   tik.forEach((tik) => (tik.innerHTML = ""));
